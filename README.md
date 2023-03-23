@@ -23,7 +23,7 @@ git checkout v3.0.2
   b. If via manifests:
      The .tmpl file must be inserted at `data.[TEMPLATE_NAME]`
      For example with Ingress it would be `data.ingress-template`
-6. If you have trouble figuring out where to insert the contents, see my [full example for helm](custom-values.yaml), and see [this one](https://github.com/nginxinc/kubernetes-ingress/tree/main/examples/shared-examples/custom-templates) for a basic example using the ConfigMap manifest.
+6. If you have trouble figuring out where to insert the contents, see my [full example for helm](custom-values.yml), and see [this one](https://github.com/nginxinc/kubernetes-ingress/tree/main/examples/shared-examples/custom-templates) for a basic example using the ConfigMap manifest.
 7. Locate the portion of the template responsible for location block creation. On the Ingress template, you are looking for these specific lines:
 ```tmpl
 {{range $location := $server.Locations}}

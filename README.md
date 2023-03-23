@@ -1,5 +1,7 @@
 # Per URI and Per Method Metrics for the NGINX Plus Ingress Controller
 
+This repo provides instructions (and a helm example) for automatic insertion of `status_zone` directives into every location block configured by an Ingress or another resource (like the VirtualServer CRD) for use with NGINX Plus. This allows for API monitoring of HTTP requests broken out on a per method basis by hitting the NGINX Plus API at `{nginxHost}/api/{apiVersion}/http/location_zones/{httpLocationZoneName}`, with separate endpoints to monitor GET, POST, and other methods that the user defines.
+
 ## Demo:
 ![](nginx-uri-method.gif)
 

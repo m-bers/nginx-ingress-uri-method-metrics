@@ -22,15 +22,23 @@ git checkout v3.0.2
 4. From there, go to `$PROJECT_ROOT/internal/configs`. The templates for global config and for Ingress resources are in the `version1` subfolder and the templates for CRDs are in the `version2` subfolder.
 5. Determine which resource you want to apply per-URI and per-method metrics to and open up the file corresponding file with extension `.tmpl` For example, `$PROJECT_ROOT/internal/configs/version1/nginx-plus.ingress.tmpl` is the template file for the Ingress resource on NGINX Plus, and `$PROJECT_ROOT/internal/configs/version2/nginx-plus.transportserver.tmpl` is the template file for the TransportServer CRD resource on NGINX Plus.
 6. Copy the contents of that file into one of two places, and make sure it's at the next level of indentation to the parent element, depending on if you deployed via helm or via manifests. 
-  1. If via helm: The .tmpl file must be inserted at `controller.config.entries.[TEMPLATE_NAME]`. For example, If you are modifying the Ingress template it would be at `controller.config.entries.ingress-template`
-  2. If via manifests: The .tmpl file must be inserted at `data.[TEMPLATE_NAME]`. For example with Ingress it would be `data.ingress-template`
-6. If you have trouble figuring out where to insert the contents, see my [full example for helm](custom-values.yml), and see [this one](https://github.com/nginxinc/kubernetes-ingress/tree/main/examples/shared-examples/custom-templates) for a basic example using the ConfigMap manifest.
-7. Locate the portion of the template responsible for location block creation. On the Ingress template, you are looking for these specific lines:
+    * **If via helm:** 
+    
+      The .tmpl file must be inserted at `controller.config.entries.[TEMPLATE_NAME]`. 
+      
+      For example, If you are modifying the Ingress template it would be at `controller.config.entries.ingress-template`
+    * **If via manifests:** 
+    
+      The .tmpl file must be inserted at `data.[TEMPLATE_NAME]`. 
+      
+      For example with Ingress it would be `data.ingress-template`
+7. If you have trouble figuring out where to insert the contents, see my [full example for helm](custom-values.yml), and see [this one](https://github.com/nginxinc/kubernetes-ingress/tree/main/examples/shared-examples/custom-templates) for a basic example using the ConfigMap manifest.
+8. Locate the portion of the template responsible for location block creation. On the Ingress template, you are looking for these specific lines:
 ```tmpl
 {{range $location := $server.Locations}}
 location {{$location.Path}} {
 ```
-8. Insert the following below those lines:  
+9. Insert the following below those lines:  
 ```tmpl 
 if ($request_method = GET) {
   status_zone {{$location.ServiceName}}_GET;  
@@ -39,8 +47,8 @@ if ($request_method = POST) {
   status_zone {{$location.ServiceName}}_POST;  
 }
 ```
-9. Repeat for any other HTTP methods you want API metrics for.
-10. Upgrade your helm release or apply the ConfigMap manifest, depending on your deployment method.
+10. Repeat for any other HTTP methods you want API metrics for.
+11. Upgrade your helm release or apply the ConfigMap manifest, depending on your deployment method.
 >Note: This will look slightly different for other resources besides Ingress. For example if you are using VirtualServer, you will need to instead locate these lines in the `.tmpl`:
 ```tmpl
 {{ range $l := $s.Locations }}

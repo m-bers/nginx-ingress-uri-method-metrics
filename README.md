@@ -45,4 +45,4 @@ if ($request_method = POST) {
 {{ range $l := $s.Locations }}
 location {{ $l.Path }} {
 ```
-And the lines you insert afterwards will need to use $l instead of $location, but everything else should be the same. 
+>And the lines you insert afterwards will need to use $l instead of $location, but everything else should be the same. 

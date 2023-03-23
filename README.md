@@ -1,5 +1,8 @@
 # Per URI and Per Method Metrics for the NGINX Plus Ingress Controller
 
+## Demo:
+![](nginx-uri-method.gif)
+
 ## Note:
 This assumes you have already deployed the NGINX Plus Ingress Controller following the steps documented here (either via helm or via manifests): https://docs.nginx.com/nginx-ingress-controller/installation/
 

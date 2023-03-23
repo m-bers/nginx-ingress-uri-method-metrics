@@ -20,7 +20,7 @@ cd kubernetes-ingress
 git checkout v3.0.2
 ```
 4. From there, go to `$PROJECT_ROOT/internal/configs`. The templates for global config and for Ingress resources are in the `version1` subfolder and the templates for CRDs are in the `version2` subfolder.
-5. Determine which resource you want to apply per-URI and per-method metrics to and open up the file corresponding file with extension `.tmpl` For example, `$PROJECT_ROOT/internal/configs/version1/nginx-plus.ingress.tmpl` is the template file for the Ingress resource on NGINX Plus, and `$PROJECT_ROOT/internal/configs/version2/nginx-plus.transportserver.tmpl` is the template file for the TransportServer CRD resource on NGINX Plus.
+5. Determine which resource you want to apply per-URI and per-method metrics to and open up the file corresponding file with extension `.tmpl` For example, `$PROJECT_ROOT/internal/configs/version1/nginx-plus.ingress.tmpl` is the template file for the Ingress resource on NGINX Plus, and `$PROJECT_ROOT/internal/configs/version2/nginx-plus.virtualserver.tmpl` is the template file for the VirtualServer CRD resource on NGINX Plus.
 6. Copy the contents of that file into one of two places, and make sure it's at the next level of indentation to the parent element, depending on if you deployed via helm or via manifests. 
     * **If via helm:** 
     
